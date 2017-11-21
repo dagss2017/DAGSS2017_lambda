@@ -40,7 +40,7 @@ El código de partida está disponible para cada grupo en su respectivo reposito
     mysql> grant all privileges on dagss.* to   dagss@localhost identified by "dagss";
     ```
 
-* Cargar la definición de tablas y usuarios iniciales 
+* Cargar la definición de tablas y usuarios usuario iniciales 
 
   * moverse a la carpeta `sql` del proyecto 
     ```
