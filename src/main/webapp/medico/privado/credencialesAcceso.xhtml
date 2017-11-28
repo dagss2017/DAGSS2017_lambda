@@ -7,43 +7,39 @@ and open the template in the editor.
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:b="http://bootsfaces.net/ui">
+    
     <head>
         <title>Credenciales de Acceso</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
     <body>
         <h3>Modificar credenciales de Acceso</h3>
-        <h:form>
-            <h:panelGrid columns="4" border="4" bgcolor="#3c99d1" rendered="#{not empty medicoControlador.medicoActual}"  >
-                
-                <h:outputLabel value="Nº Colegiado" for="colegiado"/>
-                <h:inputText id ="colegiado" value="#{medicoControlador.medicoActual.numeroColegiado}" required="true"/>
-                
-                <h:outputLabel value="DNI" for="dni"/>
-                <h:inputText id ="dni" value="#{medicoControlador.medicoActual.getDni()}" required="true"/>
-                
-                <h:outputLabel value="Nombre:" for="nombre"/>
-                <h:inputText id="nombre" value="#{medicoControlador.medicoActual.getNombre()}" required="true"/>
-                
-                <h:outputLabel value="Apellidos" for="apellidos"/>
-                <h:inputText id="apellidos" value="#{medicoControlador.medicoActual.getApellidos()}" required="true"/>
-                
-                <h:outputLabel value="Telefono" for="telefono"/>
-                <h:inputText id="telefono" value="#{medicoControlador.medicoActual.getTelefono()}" required="true"/>
-                
-                <h:outputLabel value="Email" for="email"/>
-                <h:inputText id="email" value="#{medicoControlador.medicoActual.getEmail()}" required="true"/>
-                
-                <h:outputLabel value=" New Password" for="nombre"/>
-                <h:inputText id="password" value=""/>
-                
-            </h:panelGrid>
-            <h:commandButton  value="Volver"  action="index" />
-            <h:commandButton  value="Guardar" />
-        </h:form>
-        
-        
-        
+        <ui:composition template="/plantillas/plantillaComun.xhtml">
+            <ui:define name="contenido">
+                <h:form id="credencialesForm">
+                    <b:column offset="3" span="7">
+                        <b:panel title="Credenciales de Médico" look="primary" collapsible="false">
+                            <b:inputText id="colegiado" label="Número Colegiado" value="#{medicoControlador.medicoActual.getNumeroColegiado()}" />
+                            <b:inputText id="dni" label="DNI" readonly="true" value="#{medicoControlador.medicoActual.getDni()}" />
+                            <b:inputText id="nombre" label="Nombre" value="#{medicoControlador.medicoActual.getNombre()}" />
+                            <b:inputText id="apellidos" label="Apellidos" value="#{medicoControlador.medicoActual.getApellidos()}" />
+                            <b:inputText id="telefono" label="Teléfono" value="#{medicoControlador.medicoActual.getTelefono()}" />
+                            <b:inputText id="email" label="Email" value="#{medicoControlador.medicoActual.getEmail()}" />
+                            <b:inputSecret id="password" label="Contraseña:"/>
+                            <b:commandButton value="Volver"  action="index" span="2"/>
+                            <b:commandButton value="Actualizar" span="2"/>
+                        </b:panel>
+                            <f:facet name="footer">
+                                La contraseña no se muestra por motivos de seguridad;
+                                Introducirla sólo en el caso de querer actualizarla.
+                            </f:facet>
+                    </b:column>
+                    
+                </h:form>                
+            </ui:define>            
+        </ui:composition>
     </body>
 </html>

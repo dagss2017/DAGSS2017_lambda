@@ -110,6 +110,10 @@ public class MedicoControlador implements Serializable {
         }
         return destino;
     }
+    
+    public void actualizarCredenciales(){
+        medicoDAO.actualizarCredenciales(dni, dni, dni, numeroColegiado, dni, dni, password);
+    }
 
     //Acciones
     public String doShowCita() {
