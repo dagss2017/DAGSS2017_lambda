@@ -36,6 +36,12 @@ public class MedicoDAO extends GenericoDAO<Medico> {
         q.setParameter("patron","%"+patron+"%");        
         return q.getResultList();
     }
+    
+    public void actualizarCredenciales(int id,String dni, String nombre, String appellidos, String numeroColegiado, 
+            String telefono, String email, String password){
+        TypedQuery<Medico> q = em.createQuery("UPDATE medico SET APELLIDOS=:apellidos, DNI=:dni, EMAIL=:email, "
+                + "NOMBRE=:nombre,NUMEROCOLEGIADO=:,PASSWORD=:,TELEFONO=:telefono WHERE ID=:id",Medico.class);
+    }
 
     // Completar aqui
 }

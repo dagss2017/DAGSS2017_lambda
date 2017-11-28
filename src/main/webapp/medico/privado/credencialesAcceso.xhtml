@@ -5,12 +5,45 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <head>
         <title>Credenciales de Acceso</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
     <body>
-        <div>Modificar credenciales de acceso mediante imputs</div>
+        <h3>Modificar credenciales de Acceso</h3>
+        <h:form>
+            <h:panelGrid columns="4" border="4" bgcolor="#3c99d1" rendered="#{not empty medicoControlador.medicoActual}"  >
+                
+                <h:outputLabel value="Nº Colegiado" for="colegiado"/>
+                <h:inputText id ="colegiado" value="#{medicoControlador.medicoActual.numeroColegiado}" required="true"/>
+                
+                <h:outputLabel value="DNI" for="dni"/>
+                <h:inputText id ="dni" value="#{medicoControlador.medicoActual.getDni()}" required="true"/>
+                
+                <h:outputLabel value="Nombre:" for="nombre"/>
+                <h:inputText id="nombre" value="#{medicoControlador.medicoActual.getNombre()}" required="true"/>
+                
+                <h:outputLabel value="Apellidos" for="apellidos"/>
+                <h:inputText id="apellidos" value="#{medicoControlador.medicoActual.getApellidos()}" required="true"/>
+                
+                <h:outputLabel value="Telefono" for="telefono"/>
+                <h:inputText id="telefono" value="#{medicoControlador.medicoActual.getTelefono()}" required="true"/>
+                
+                <h:outputLabel value="Email" for="email"/>
+                <h:inputText id="email" value="#{medicoControlador.medicoActual.getEmail()}" required="true"/>
+                
+                <h:outputLabel value=" New Password" for="nombre"/>
+                <h:inputText id="password" value=""/>
+                
+            </h:panelGrid>
+            <h:commandButton  value="Volver"  action="index" />
+            <h:commandButton  value="Guardar" />
+        </h:form>
+        
+        
+        
     </body>
 </html>
