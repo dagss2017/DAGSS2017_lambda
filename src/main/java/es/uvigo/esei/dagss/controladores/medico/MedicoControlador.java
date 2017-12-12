@@ -29,6 +29,8 @@ public class MedicoControlador implements Serializable {
     private String dni;
     private String numeroColegiado;
     private String password;
+    private String nombre;
+    private String apellidos;
 
     @Inject
     private AutenticacionControlador autenticacionControlador;
@@ -112,7 +114,19 @@ public class MedicoControlador implements Serializable {
     }
     
     public void actualizarCredenciales(){
-        medicoDAO.actualizarCredenciales(dni, dni, dni, numeroColegiado, dni, dni, password);
+        //Medico m = new Medico();
+        //m.setNumeroColegiado(numeroColegiado);
+        //m.setDni(dni);
+        //m.setNombre(nombre);
+        //m.setApellidos(apellidos);
+        //m.setNumeroColegiado(numeroColegiado);
+        //m.setPassword(password);
+        
+        //Medico(String numeroColegiado, String dni, String nombre, String apellidos, CentroSalud centroSalud, String telefono, String email) {
+
+        
+        
+        medicoDAO.actualizarCredenciales(medicoActual);
     }
 
     //Acciones

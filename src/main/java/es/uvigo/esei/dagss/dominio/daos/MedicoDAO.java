@@ -37,21 +37,21 @@ public class MedicoDAO extends GenericoDAO<Medico> {
         return q.getResultList();
     }
     
-    public void actualizarCredenciales(String dni, String nombre, String apellidos, String numeroColegiado, 
-            String telefono, String email, String password){
-        if(!password.isEmpty()){//si la contraseña no esta vacia la actualizo
+    public void actualizarCredenciales(Medico medico){
+        if(!medico.getPassword().isEmpty()){//si la contraseña no esta vacia la actualizo
             TypedQuery<Medico> q = em.createQuery("UPDATE medico SET PASSWORD=:password WHERE DNI=:dni",Medico.class);
-            q.setParameter("password","%"+password+"%" );
+            q.setParameter("password","%"+medico.getPassword()+"%" );
+             q.setParameter("DNI","%"+medico.getDni()+"%" );
             q.getSingleResult();
         }//despues actualizo todos los campos menos el dni y el id que no se pueden actualizar
         TypedQuery<Medico> q = em.createQuery("UPDATE medico SET APELLIDOS=:apellidos, EMAIL=:email, "
                 + "NOMBRE=:nombre,NUMEROCOLEGIADO=:numeroColegiado,TELEFONO=:telefono WHERE DNI=:dni",Medico.class);
-        q.setParameter("apellidos","%"+apellidos+"%"); 
-        q.setParameter("email","%"+email+"%"); 
-        q.setParameter("nombre","%"+nombre+"%"); 
-        q.setParameter("numeroColegiado","%"+numeroColegiado+"%");
-        q.setParameter("telefono","%"+telefono+"%");
-        q.setParameter("dni","%"+dni+"%");
+        q.setParameter("apellidos","%"+medico.getApellidos()+"%"); 
+        q.setParameter("email","%"+medico.getEmail()+"%"); 
+        q.setParameter("nombre","%"+medico.getNombre()+"%"); 
+        q.setParameter("numeroColegiado","%"+medico.getNumeroColegiado()+"%");
+        q.setParameter("telefono","%"+medico.getTelefono()+"%");
+        q.setParameter("dni","%"+medico.getDni()+"%");
         q.getSingleResult();
     }
 
