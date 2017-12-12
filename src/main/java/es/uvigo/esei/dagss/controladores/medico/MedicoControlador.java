@@ -44,7 +44,23 @@ public class MedicoControlador implements Serializable {
      */
     public MedicoControlador() {
     }
-
+    
+    public String getNombre(){
+        return nombre;
+    }
+    
+    public void setNombre(String nombre){
+        this.nombre=nombre;
+    }
+    
+    public String getApellidos(){
+        return apellidos;
+    }
+    
+    public void setApellidos(String apellidos){
+        this.apellidos=apellidos;
+    }
+    
     public String getDni() {
         return dni;
     }
@@ -121,11 +137,7 @@ public class MedicoControlador implements Serializable {
         //m.setApellidos(apellidos);
         //m.setNumeroColegiado(numeroColegiado);
         //m.setPassword(password);
-        
         //Medico(String numeroColegiado, String dni, String nombre, String apellidos, CentroSalud centroSalud, String telefono, String email) {
-
-        
-        
         medicoDAO.actualizarCredenciales(medicoActual);
     }
 

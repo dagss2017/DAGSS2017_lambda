@@ -38,21 +38,10 @@ public class MedicoDAO extends GenericoDAO<Medico> {
     }
     
     public void actualizarCredenciales(Medico medico){
-        if(!medico.getPassword().isEmpty()){//si la contraseña no esta vacia la actualizo
-            TypedQuery<Medico> q = em.createQuery("UPDATE medico SET PASSWORD=:password WHERE DNI=:dni",Medico.class);
-            q.setParameter("password","%"+medico.getPassword()+"%" );
-             q.setParameter("DNI","%"+medico.getDni()+"%" );
-            q.getSingleResult();
-        }//despues actualizo todos los campos menos el dni y el id que no se pueden actualizar
-        TypedQuery<Medico> q = em.createQuery("UPDATE medico SET APELLIDOS=:apellidos, EMAIL=:email, "
-                + "NOMBRE=:nombre,NUMEROCOLEGIADO=:numeroColegiado,TELEFONO=:telefono WHERE DNI=:dni",Medico.class);
-        q.setParameter("apellidos","%"+medico.getApellidos()+"%"); 
-        q.setParameter("email","%"+medico.getEmail()+"%"); 
-        q.setParameter("nombre","%"+medico.getNombre()+"%"); 
-        q.setParameter("numeroColegiado","%"+medico.getNumeroColegiado()+"%");
-        q.setParameter("telefono","%"+medico.getTelefono()+"%");
-        q.setParameter("dni","%"+medico.getDni()+"%");
-        q.getSingleResult();
+        /*em.merge -> actualizar
+           em. persist -> insert
+           em. remove -> eliminar*/
+        em.merge(medico);
     }
 
     // Completar aqui
