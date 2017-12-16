@@ -37,8 +37,8 @@ and open the template in the editor.
                             <b:commandButton value="Volver"  action="agenda" span="2"/>
                         </b:panel>
                     </b:column>
-                    
-                </h:form>                
+                    <b:commandButton value="Ver recetas"  action="#{medicoControlador.doShowRecetas(medicoControlador.citaDetalle.paciente)}" span="2"/>
+                    </h:form>
             </ui:define>            
         </ui:composition>
     </body>

@@ -16,6 +16,8 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import java.util.List;
 import es.uvigo.esei.dagss.dominio.entidades.Cita;
+import es.uvigo.esei.dagss.dominio.entidades.Paciente;
+import es.uvigo.esei.dagss.dominio.entidades.Prescripcion;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -40,6 +42,9 @@ public class MedicoControlador implements Serializable {
     private String apellidos;
     
     private List<Cita> citas;
+    private List<Prescripcion> prescripciones;
+
+    
     private Cita citaDetalle;
 
     @Inject
@@ -52,6 +57,14 @@ public class MedicoControlador implements Serializable {
      * Creates a new instance of AdministradorControlador
      */
     public MedicoControlador() {
+    }
+    
+    public List<Prescripcion> getPrescripciones() {
+        return prescripciones;
+    }
+
+    public void setPrescripciones(List<Prescripcion> prescripciones) {
+        this.prescripciones = prescripciones;
     }
     
     public String getNombre(){
@@ -193,5 +206,10 @@ public class MedicoControlador implements Serializable {
         citaDetalle = c;
         
         return "detallesCita";
+    }
+    public String doShowRecetas(Paciente p) throws ParseException{
+        
+        prescripciones = medicoDAO.buscarPrescripcionesPaciente(p.getId(),convertStringFecha(getFechaHoy()));
+        return "listaPrescripcion";
     }
 }
