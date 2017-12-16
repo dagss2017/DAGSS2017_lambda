@@ -3,10 +3,13 @@
  */
 package es.uvigo.esei.dagss.dominio.daos;
 
+import es.uvigo.esei.dagss.dominio.entidades.Cita;
 import es.uvigo.esei.dagss.dominio.entidades.Medico;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 @Stateless
@@ -38,11 +41,19 @@ public class MedicoDAO extends GenericoDAO<Medico> {
     }
     
     public void actualizarCredenciales(Medico medico){
-        /*em.merge -> actualizar
-           em. persist -> insert
-           em. remove -> eliminar*/
+        /* em.merge -> actualizar
+           em.persist -> insert
+           em.remove -> eliminar */
         em.merge(medico);
     }
-
+    
+    public List<Cita> buscarCitasPorMedicoDia(Long medicoId, Date fecha) {
+       
+        TypedQuery<Cita> q = em.createQuery("SELECT c FROM Cita AS c WHERE c.fecha = :fecha AND c.medico.id = :medicoId", Cita.class);
+        q.setParameter("fecha", fecha); 
+        q.setParameter("medicoId", medicoId);
+        
+        return q.getResultList();
+    }
     // Completar aqui
 }

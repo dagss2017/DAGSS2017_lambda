@@ -15,6 +15,15 @@ import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import java.util.List;
+import es.uvigo.esei.dagss.dominio.entidades.Cita;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Calendar;
+import java.util.Locale;
+
 
 /**
  *
@@ -31,6 +40,8 @@ public class MedicoControlador implements Serializable {
     private String password;
     private String nombre;
     private String apellidos;
+    
+    private List<Cita> citas;
 
     @Inject
     private AutenticacionControlador autenticacionControlador;
@@ -38,7 +49,6 @@ public class MedicoControlador implements Serializable {
 
     @EJB
     private MedicoDAO medicoDAO;
-
     /**
      * Creates a new instance of AdministradorControlador
      */
@@ -92,6 +102,14 @@ public class MedicoControlador implements Serializable {
     public void setMedicoActual(Medico medicoActual) {
         this.medicoActual = medicoActual;
     }
+    
+    public List<Cita> getCitas(){
+        return citas;
+    }
+    
+    public void setCitas(List<Cita> citas){
+        this.citas = citas;
+    }
 
     private boolean parametrosAccesoInvalidos() {
         return (((dni == null) && (numeroColegiado == null)) || (password == null));
@@ -140,9 +158,31 @@ public class MedicoControlador implements Serializable {
         //Medico(String numeroColegiado, String dni, String nombre, String apellidos, CentroSalud centroSalud, String telefono, String email) {
         medicoDAO.actualizarCredenciales(medicoActual);
     }
-
+    
+    public String doDevolverAllCitasMedico() throws ParseException{
+       String fechaHoy = this.getFechaHoy();
+       Date dFechaHoy = this.convertStringFecha(fechaHoy);
+       
+       citas = medicoDAO.buscarCitasPorMedicoDia(medicoActual.getId(), dFechaHoy);
+       
+       return "agenda";        
+    }
+    
+    public String getFechaHoy(){
+       Date date = Calendar.getInstance().getTime();
+       SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+       String d = sdf.format(date);
+       return d;
+    }
+    
+    public Date convertStringFecha(String d) throws ParseException{
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = format.parse(d);
+        return date;
+    }
+    
     //Acciones
-    public String doShowCita() {
+    public String doShowCita(Cita c) {
         return "detallesCita";
     }
 }
