@@ -51,7 +51,7 @@ and open the template in the editor.
                             <h:outputText value="#{cita.hora}"/>
                         </h:column>              
                         <h:column>
-                            <h:commandButton value="Detalle" action="#{MedicoControlador.doShowCita()}"/>
+                            <h:commandButton value="Detalle" action="#{medicoControlador.doShowCita(cita)}"/>
                         </h:column>     
                     </h:dataTable>
 

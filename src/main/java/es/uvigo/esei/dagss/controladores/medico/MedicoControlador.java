@@ -4,7 +4,6 @@
 package es.uvigo.esei.dagss.controladores.medico;
 
 import es.uvigo.esei.dagss.controladores.autenticacion.AutenticacionControlador;
-import es.uvigo.esei.dagss.dominio.daos.CitaDAO;
 import es.uvigo.esei.dagss.dominio.daos.MedicoDAO;
 import es.uvigo.esei.dagss.dominio.entidades.Medico;
 import es.uvigo.esei.dagss.dominio.entidades.TipoUsuario;
@@ -22,7 +21,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Calendar;
-import java.util.Locale;
 
 
 /**
@@ -42,6 +40,7 @@ public class MedicoControlador implements Serializable {
     private String apellidos;
     
     private List<Cita> citas;
+    private Cita citaDetalle;
 
     @Inject
     private AutenticacionControlador autenticacionControlador;
@@ -109,6 +108,14 @@ public class MedicoControlador implements Serializable {
     
     public void setCitas(List<Cita> citas){
         this.citas = citas;
+    }
+    
+     public Cita getCitaDetalle(){
+        return citaDetalle;
+    }
+    
+    public void setCitaDetalle(Cita citaDetalle){
+        this.citaDetalle=citaDetalle;
     }
 
     private boolean parametrosAccesoInvalidos() {
@@ -183,6 +190,8 @@ public class MedicoControlador implements Serializable {
     
     //Acciones
     public String doShowCita(Cita c) {
+        citaDetalle = c;
+        
         return "detallesCita";
     }
 }
