@@ -212,4 +212,9 @@ public class MedicoControlador implements Serializable {
         prescripciones = medicoDAO.buscarPrescripcionesPaciente(p.getId(),convertStringFecha(getFechaHoy()));
         return "listaPrescripcion";
     }
+    
+        public String doNuevaPrescripcion(){
+        
+        return "nuevaPrescripcion";
+    }
 }
