@@ -65,5 +65,17 @@ public class MedicoDAO extends GenericoDAO<Medico> {
         return q.getResultList();
     }
     
+    public void anhadirPrescripcion(Prescripcion prescripcion){
+        em.persist(prescripcion);
+    }
+    
+    public void borrarPrescripcion(Prescripcion prescripcion){
+        em.remove(prescripcion);
+    }
+    
+    public void actualizarPrescripcion(Prescripcion prescripcion){
+        em.merge(prescripcion);
+    }
+    
     // Completar aqui
 }

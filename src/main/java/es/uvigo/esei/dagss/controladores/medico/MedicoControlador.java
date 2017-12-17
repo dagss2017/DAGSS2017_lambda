@@ -38,13 +38,14 @@ public class MedicoControlador implements Serializable {
     private String dni;
     private String numeroColegiado;
     private String password;
+    
     private String nombre;
     private String apellidos;
     
     private List<Cita> citas;
     private List<Prescripcion> prescripciones;
 
-    
+    private Prescripcion prescripcion;
     private Cita citaDetalle;
 
     @Inject
@@ -123,12 +124,20 @@ public class MedicoControlador implements Serializable {
         this.citas = citas;
     }
     
-     public Cita getCitaDetalle(){
+    public Cita getCitaDetalle(){
         return citaDetalle;
     }
     
     public void setCitaDetalle(Cita citaDetalle){
         this.citaDetalle=citaDetalle;
+    }
+    
+    public Prescripcion getPrescripcion(){
+        return prescripcion;
+    }
+    
+    public void setPrescripcion(Prescripcion prescripcion){
+        this.prescripcion=prescripcion;
     }
 
     private boolean parametrosAccesoInvalidos() {
@@ -213,8 +222,13 @@ public class MedicoControlador implements Serializable {
         return "listaPrescripcion";
     }
     
-        public String doNuevaPrescripcion(){
+    public String addPrescripcion() throws ParseException{
         
-        return "nuevaPrescripcion";
+        prescripcion.setMedico(medicoActual);
+        prescripcion.setPaciente(citaDetalle.getPaciente());
+        
+        medicoDAO.actualizarPrescripcion(prescripcion);
+        return doShowRecetas(citaDetalle.getPaciente());
+    
     }
 }
