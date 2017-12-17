@@ -8,7 +8,8 @@ and open the template in the editor.
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
       
     <h:head>
         <title>Gestión de Citas</title>
@@ -17,46 +18,43 @@ and open the template in the editor.
         <ui:composition template="/plantillas/plantillaComun.xhtml">
             <ui:define name="contenido">
             <h3> Gestión de Citas </h3>
-                <h:form>
-                    <h:dataTable value="#{medicoControlador.citas}"
-                                 var="cita">
-                        <h:column>
-                            <f:facet name="header"><h:outputLabel value="ID"/></f:facet>
-                            <h:outputText value="#{cita.id}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header"><h:outputLabel value="Apellidos Paciente"/></f:facet>
-                            <h:outputText value="#{cita.paciente.apellidos}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header"><h:outputLabel value="Nombre Paciente"/></f:facet>
+                <h:form id="AgendaForm">
+                    <p:dataTable value="#{medicoControlador.citas}" var="cita">
+                        <p:column headerText="ID">
+                             <h:outputText value="#{cita.id}"/>
+                        </p:column>
+
+                        <p:column headerText="Apellidos">
+                           <h:outputText value="#{cita.paciente.apellidos}"/>
+                        </p:column>
+
+                        <p:column headerText="Nombre">
                             <h:outputText value="#{cita.paciente.nombre}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header"><h:outputLabel value="Estado"/></f:facet>
+                        </p:column>
+
+                        <p:column headerText="Estado">
                             <h:outputText value="#{cita.estado}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header"><h:outputLabel value="Fecha"/></f:facet>
-                            <h:outputText value="#{cita.fecha}">
+                        </p:column>
+                        
+                         <p:column headerText="Fecha">
+                             <h:outputText value="#{cita.fecha}">
                                 <f:convertDateTime pattern="dd/MM/yyyy, hh:mm"/>
                             </h:outputText>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header"><h:outputLabel value="Duración"/></f:facet>
+                        </p:column>
+                        
+                         <p:column headerText="Duración">
                             <h:outputText value="#{cita.duracion}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header"><h:outputLabel value="Hora"/></f:facet>
+                        </p:column>
+                        
+                          <p:column headerText="Hora">
                             <h:outputText value="#{cita.hora}"/>
-                        </h:column>              
-                        <h:column>
+                        </p:column>
+                        
+                          <p:column headerText="Detalle">
                             <h:commandButton value="Detalle" action="#{medicoControlador.doShowCita(cita)}"/>
-                        </h:column>     
-                    </h:dataTable>
-
+                        </p:column>
+                    </p:dataTable>
                     <h:commandButton value="Volver" action="index"/>
-
                 </h:form>
             </ui:define>            
         </ui:composition>

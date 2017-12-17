@@ -39,9 +39,6 @@ public class MedicoControlador implements Serializable {
     private String numeroColegiado;
     private String password;
     
-    private String nombre;
-    private String apellidos;
-    
     private List<Cita> citas;
     private List<Prescripcion> prescripciones;
 
@@ -66,22 +63,6 @@ public class MedicoControlador implements Serializable {
 
     public void setPrescripciones(List<Prescripcion> prescripciones) {
         this.prescripciones = prescripciones;
-    }
-    
-    public String getNombre(){
-        return nombre;
-    }
-    
-    public void setNombre(String nombre){
-        this.nombre=nombre;
-    }
-    
-    public String getApellidos(){
-        return apellidos;
-    }
-    
-    public void setApellidos(String apellidos){
-        this.apellidos=apellidos;
     }
     
     public String getDni() {
@@ -177,14 +158,6 @@ public class MedicoControlador implements Serializable {
     }
     
     public void actualizarCredenciales(){
-        //Medico m = new Medico();
-        //m.setNumeroColegiado(numeroColegiado);
-        //m.setDni(dni);
-        //m.setNombre(nombre);
-        //m.setApellidos(apellidos);
-        //m.setNumeroColegiado(numeroColegiado);
-        //m.setPassword(password);
-        //Medico(String numeroColegiado, String dni, String nombre, String apellidos, CentroSalud centroSalud, String telefono, String email) {
         medicoDAO.actualizarCredenciales(medicoActual);
     }
     
@@ -213,17 +186,14 @@ public class MedicoControlador implements Serializable {
     //Acciones
     public String doShowCita(Cita c) {
         citaDetalle = c;
-        
         return "detallesCita";
     }
     public String doShowRecetas(Paciente p) throws ParseException{
-        
         prescripciones = medicoDAO.buscarPrescripcionesPaciente(p.getId(),convertStringFecha(getFechaHoy()));
         return "listaPrescripcion";
     }
     
     public String addPrescripcion() throws ParseException{
-        
         prescripcion.setMedico(medicoActual);
         prescripcion.setPaciente(citaDetalle.getPaciente());
         
