@@ -19,46 +19,36 @@ and open the template in the editor.
             <ui:define name="contenido">
             <h3> Lista de Recetas </h3>
                 <h:form id="RecetasForm">
-                    <p:dataTable value="#{farmaciaControlador.citas}" var="receta">
-                        <p:column headerText="ID">
-                             <h:outputText value="#{receta.id}"/>
+                    <p:dataTable value="#{farmaciaControlador.prescripciones}" var="prescripcion">
+                        <p:column headerText="Inidicaciones">
+                            <h:outputText value="#{prescripcion.indicaciones}"/>
+                        </p:column>
+                         <p:column headerText="Dosis">
+                             <h:outputText value="#{prescripcion.dosis}"/>
+                        </p:column>
+                        <p:column headerText="Fecha Inicio">
+                            <h:outputText value="#{prescripcion.fechaInicio}"/>
+                        </p:column>
+                        <p:column headerText="Fecha Fin">
+                            <h:outputText value="#{prescripcion.fechaFin}"/>
+                        </p:column>
+                        <p:column headerText="Médico N. Colegiado">
+                            <h:outputText value="#{prescripcion.medico.numeroColegiado}"/>
+                        </p:column>
+                         <p:column headerText="Médico Nombre">
+                            <h:outputText value="#{prescripcion.medico.nombre}"/>
+                        </p:column>
+                        <p:column headerText="Receta">
+                            <p:dataTable value="#{farmaciaControlador.prescripciones}" var="receta">
+                                
+                            </p:dataTable>
                         </p:column>
 
-                        <p:column headerText="Apellidos">
-                           <h:outputText value="#{cita.paciente.apellidos}"/>
-                        </p:column>
-
-                        <p:column headerText="Nombre">
-                            <h:outputText value="#{cita.paciente.nombre}"/>
-                        </p:column>
-
-                        <p:column headerText="Estado">
-                            <h:outputText value="#{cita.estado}"/>
-                        </p:column>
                         
-                         <p:column headerText="Fecha">
-                             <h:outputText value="#{cita.fecha}">
-                                <f:convertDateTime pattern="dd/MM/yyyy, hh:mm"/>
-                            </h:outputText>
-                        </p:column>
-                        
-                         <p:column headerText="Duración">
-                            <h:outputText value="#{cita.duracion}"/>
-                        </p:column>
-                        
-                          <p:column headerText="Hora">
-                            <h:outputText value="#{cita.hora}"/>
-                        </p:column>
-                        
-                          <p:column headerText="Detalle">
-                            <h:commandButton value="Detalle" action="#{medicoControlador.doShowCita(cita)}"/>
-                        </p:column>
                     </p:dataTable>
                     <h:commandButton value="Volver" action="index"/>
                 </h:form>
             </ui:define>            
         </ui:composition>
-        
-
     </h:body>
 </html>

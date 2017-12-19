@@ -6,10 +6,12 @@ package es.uvigo.esei.dagss.controladores.farmacia;
 import es.uvigo.esei.dagss.controladores.autenticacion.AutenticacionControlador;
 import es.uvigo.esei.dagss.dominio.daos.FarmaciaDAO;
 import es.uvigo.esei.dagss.dominio.daos.PacienteDAO;
+import es.uvigo.esei.dagss.dominio.daos.PrescripcionDAO;
 import es.uvigo.esei.dagss.dominio.entidades.*;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -24,7 +26,7 @@ import javax.inject.Inject;
 public class FarmaciaControlador implements Serializable {
 
     private Farmacia farmaciaActual;
-    private Prescripcion prescripcion;
+    private List<Prescripcion> prescripciones;
     private String nif;
     private String password;
     private String tarjetaSanitaria = "";
@@ -35,6 +37,10 @@ public class FarmaciaControlador implements Serializable {
 
     @EJB
     private FarmaciaDAO farmaciaDAO;
+    
+    @EJB
+    private PrescripcionDAO prescripcionDAO;
+    
     @EJB
     private PacienteDAO pacienteDAO;
 
@@ -48,8 +54,8 @@ public class FarmaciaControlador implements Serializable {
         return this.paciente;
     }
     
-    public Prescripcion getPrescripcion(){
-        return this.prescripcion;
+    public List<Prescripcion> getPrescripciones(){
+        return this.prescripciones;
     }
     
     public String getNif() {
@@ -111,15 +117,14 @@ public class FarmaciaControlador implements Serializable {
 
     public String buscarPaciente() {
         this.paciente = pacienteDAO.buscarPorTarjetaSanitaria(this.tarjetaSanitaria);
+        
+        this.prescripciones=prescripcionDAO.buscarPorPaciente(paciente.getDni());
+        
         return "buscarPaciente";
     }
     
-    public void detalleReceta(){
-        
-    }
-    
     public String recetas(){
-        return "receta";
+        return "listaRecetas";
     }
 
 }
