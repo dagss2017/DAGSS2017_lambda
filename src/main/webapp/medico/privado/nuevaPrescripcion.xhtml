@@ -70,6 +70,7 @@ and open the template in the editor.
                         </div>
                     </div>
                     <p:commandButton icon="ui-icon-plusthick" value="Añadir prescripcion" action="#{medicoControlador.addPrescripcion()}" />
+                    <p:commandButton value="Return" action="#{medicoControlador.doShowRecetas(medicoControlador.citaDetalle.paciente)}" />
                 </h:form>
             </ui:define>            
         </ui:composition>
