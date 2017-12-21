@@ -54,6 +54,9 @@ public class MedicoControlador implements Serializable {
 
     @EJB
     private MedicoDAO medicoDAO;
+    @EJB
+    private MedicamentoDAO medicamentoDAO;
+    private List<Medicamento> selectedMeds;
     /**
      * Creates a new instance of AdministradorControlador
      */
@@ -131,7 +134,9 @@ public class MedicoControlador implements Serializable {
     public void setPrescripcion(Prescripcion prescripcion){
         this.prescripcion=prescripcion;
     }
-
+    
+    
+    
     private boolean parametrosAccesoInvalidos() {
         return (((dni == null) && (numeroColegiado == null)) || (password == null));
     }
@@ -211,6 +216,19 @@ public class MedicoControlador implements Serializable {
         medicoDAO.anhadirPrescripcion(prescripcion);
         return doShowRecetas(citaDetalle.getPaciente());
     
+    }
+    
+    public String doNuevaPrescripcion(){
+        setMedicamentos(medicamentoDAO.getAll());
+        return "nuevaPrescripcion";
+    }
+    
+    public void setSelectedMeds(List<Medicamento> selectedMeds) {
+        this.selectedMeds = selectedMeds;
+    }
+    
+    public List<Medicamento> getSelectedMeds() {
+        return this.selectedMeds;
     }
     
     public void doBorrarPrescripcion(Prescripcion prescripcion){

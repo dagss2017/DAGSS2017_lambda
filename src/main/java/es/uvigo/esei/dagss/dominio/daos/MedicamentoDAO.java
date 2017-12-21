@@ -14,7 +14,7 @@ import javax.persistence.TypedQuery;
 public class MedicamentoDAO extends GenericoDAO<Medicamento> {
 
     public List<Medicamento> getAll() {
-        TypedQuery<Medicamento> q = em.createQuery("SELECT c FROM Medicamento", Medicamento.class);
+        TypedQuery<Medicamento> q = em.createQuery("SELECT m FROM Medicamento AS m", Medicamento.class);
         return q.getResultList();
     }
 }

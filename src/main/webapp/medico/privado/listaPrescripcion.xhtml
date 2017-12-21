@@ -19,7 +19,7 @@ and open the template in the editor.
         <h3>Lista de prescripciones en vigor para el paciente</h3>
         <ui:composition template="/plantillas/plantillaComun.xhtml">
             <ui:define name="contenido">
-                <li>    <h:link outcome="nuevaPrescripcion" value="nuevaPrescripcion"/> </li>
+                <li>    <h:link outcome="nuevaPrescripcion" value="#{medicoControlador.doNuevaPrescripcion()}"/> </li>
                 <h:form id="listaPrescripcion">
                     <p:dataTable value="#{medicoControlador.prescripciones}"
                                  var="prescripcion">
