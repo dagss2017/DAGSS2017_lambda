@@ -19,37 +19,33 @@ and open the template in the editor.
         <h3>Lista de prescripciones en vigor para el paciente</h3>
         <ui:composition template="/plantillas/plantillaComun.xhtml">
             <ui:define name="contenido">
-                <li>    <h:link outcome="#{medicoControlador.doNuevaPrescripcion()}" value="Nueva prescripcion" /> </li>
-                <h:form id="listaPrescripcion">
-                    <h:dataTable value="#{medicoControlador.prescripciones}"
-                                 var="prescripcion">
+                <b:inputText id="nombre" label="Nombre" value="#" />
+                <b:inputText id="principioActivo" label="Principio activo" readonly="true" value="#" />
+                <b:inputText id="fabricante" label="Fabricante" value="#" />
+                <b:inputText id="familia" label="Familia" value="#" />
+                <b:inputText id="numeroDosis" label="Dosis" value="#" />
+                <h:form id="listaMedicamentos">
+                    <h:dataTable value="#{medicoControlador.medicamentos}"
+                                 var="medicamento">
                         <h:column>
-                            <f:facet name="header"><h:outputLabel value="ID"/></f:facet>
-                            <h:outputText value="#{prescripcion.id}"/>
+                            <f:facet name="header"><h:outputLabel value="Nombre"/></f:facet>
+                            <h:outputText value="#{medicamento.nombre}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header"><h:outputLabel value="Principio activo"/></f:facet>
+                            <h:outputText value="#{medicamento.principioActivo}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header"><h:outputLabel value="Fabricante"/></f:facet>
+                            <h:outputText value="#{medicamento.fabricante}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header"><h:outputLabel value="Familia"/></f:facet>
+                            <h:outputText value="#{medicamento.familia}"/>
                         </h:column>
                         <h:column>
                             <f:facet name="header"><h:outputLabel value="Dosis"/></f:facet>
-                            <h:outputText value="#{prescripcion.dosis}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header"><h:outputLabel value="Fecha inicio"/></f:facet>
-                            <h:outputText value="#{prescripcion.fechaInicio}">
-                                <f:convertDateTime pattern="dd/MM/yyyy"/>
-                            </h:outputText>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header"><h:outputLabel value="Fecha fin"/></f:facet>
-                            <h:outputText value="#{prescripcion.fechaFin}">
-                                <f:convertDateTime pattern="dd/MM/yyyy"/>
-                            </h:outputText>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header"><h:outputLabel value="Indicaciones"/></f:facet>
-                            <h:outputText value="#{prescripcion.indicaciones}"/>
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header"><h:outputLabel value="Medicamento"/></f:facet>
-                            <h:outputText value="#{prescripcion.medicamento.nombre}"/>
+                            <h:outputText value="#{medicamento.numeroDosis}"/>
                         </h:column>
                     </h:dataTable>
                 </h:form>

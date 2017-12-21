@@ -4,6 +4,7 @@
 package es.uvigo.esei.dagss.controladores.medico;
 
 import es.uvigo.esei.dagss.controladores.autenticacion.AutenticacionControlador;
+import es.uvigo.esei.dagss.dominio.daos.MedicamentoDAO;
 import es.uvigo.esei.dagss.dominio.daos.MedicoDAO;
 import es.uvigo.esei.dagss.dominio.entidades.Medico;
 import es.uvigo.esei.dagss.dominio.entidades.TipoUsuario;
@@ -16,6 +17,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import java.util.List;
 import es.uvigo.esei.dagss.dominio.entidades.Cita;
+import es.uvigo.esei.dagss.dominio.entidades.Medicamento;
 import es.uvigo.esei.dagss.dominio.entidades.Paciente;
 import es.uvigo.esei.dagss.dominio.entidades.Prescripcion;
 import java.text.DateFormat;
@@ -41,6 +43,7 @@ public class MedicoControlador implements Serializable {
     
     private List<Cita> citas;
     private List<Prescripcion> prescripciones;
+    private List<Medicamento> medicamentos;
 
     private Prescripcion prescripcion;
     private Cita citaDetalle;
@@ -55,6 +58,14 @@ public class MedicoControlador implements Serializable {
      * Creates a new instance of AdministradorControlador
      */
     public MedicoControlador() {
+    }
+
+    public List<Medicamento> getMedicamentos() {
+        return medicamentos;
+    }
+
+    public void setMedicamentos(List<Medicamento> medicamentos) {
+        this.medicamentos = medicamentos;
     }
     
     public List<Prescripcion> getPrescripciones() {
