@@ -104,3 +104,7 @@ a:link:hover, a:visited:hover  {
 	border-style: solid;
 	border-color: black;
 }
+
+#buscarPacienteForm, #datosPacienteForm{
+    float: left;
+}

@@ -5,11 +5,13 @@ package es.uvigo.esei.dagss.controladores.farmacia;
 
 import es.uvigo.esei.dagss.controladores.autenticacion.AutenticacionControlador;
 import es.uvigo.esei.dagss.dominio.daos.FarmaciaDAO;
-import es.uvigo.esei.dagss.dominio.entidades.Farmacia;
-import es.uvigo.esei.dagss.dominio.entidades.TipoUsuario;
+import es.uvigo.esei.dagss.dominio.daos.PacienteDAO;
+import es.uvigo.esei.dagss.dominio.daos.PrescripcionDAO;
+import es.uvigo.esei.dagss.dominio.entidades.*;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -24,21 +26,38 @@ import javax.inject.Inject;
 public class FarmaciaControlador implements Serializable {
 
     private Farmacia farmaciaActual;
+    private List<Prescripcion> prescripciones;
     private String nif;
     private String password;
+    private String tarjetaSanitaria = "";
+    private Paciente paciente = null;
 
     @Inject
     private AutenticacionControlador autenticacionControlador;
 
     @EJB
     private FarmaciaDAO farmaciaDAO;
+    
+    @EJB
+    private PrescripcionDAO prescripcionDAO;
+    
+    @EJB
+    private PacienteDAO pacienteDAO;
 
     /**
      * Creates a new instance of AdministradorControlador
      */
     public FarmaciaControlador() {
     }
-
+    
+    public Paciente getPaciente(){
+        return this.paciente;
+    }
+    
+    public List<Prescripcion> getPrescripciones(){
+        return this.prescripciones;
+    }
+    
     public String getNif() {
         return nif;
     }
@@ -57,6 +76,14 @@ public class FarmaciaControlador implements Serializable {
 
     public Farmacia getFarmaciaActual() {
         return farmaciaActual;
+    }
+
+    public String getTarjetaSanitaria() {
+        return this.tarjetaSanitaria;
+    }
+
+    public void setTarjetaSanitaria(String tarjetaSanitaria) {
+        this.tarjetaSanitaria = tarjetaSanitaria;
     }
 
     public void setFarmaciaActual(Farmacia farmaciaActual) {
@@ -83,9 +110,21 @@ public class FarmaciaControlador implements Serializable {
                 } else {
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Credenciales de acceso incorrectas", ""));
                 }
-
             }
         }
         return destino;
     }
+
+    public String buscarPaciente() {
+        this.paciente = pacienteDAO.buscarPorTarjetaSanitaria(this.tarjetaSanitaria);
+        
+        this.prescripciones=prescripcionDAO.buscarPorPaciente(paciente.getDni());
+        
+        return "buscarPaciente";
+    }
+    
+    public String recetas(){
+        return "listaRecetas";
+    }
+
 }

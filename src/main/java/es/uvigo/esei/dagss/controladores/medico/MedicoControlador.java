@@ -208,8 +208,16 @@ public class MedicoControlador implements Serializable {
         prescripcion.setMedico(medicoActual);
         prescripcion.setPaciente(citaDetalle.getPaciente());
         
-        medicoDAO.actualizarPrescripcion(prescripcion);
+        medicoDAO.anhadirPrescripcion(prescripcion);
         return doShowRecetas(citaDetalle.getPaciente());
     
+    }
+    
+    public void doBorrarPrescripcion(Prescripcion prescripcion){
+        medicoDAO.borrarPrescripcion(prescripcion);
+    }
+    
+    public void doEditarPrescripcion(Prescripcion prescripcion){
+        medicoDAO.actualizarPrescripcion(prescripcion);
     }
 }
