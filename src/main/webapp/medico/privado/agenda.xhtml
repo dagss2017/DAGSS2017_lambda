@@ -20,10 +20,7 @@ and open the template in the editor.
             <h3> Gestión de Citas </h3>
                 <h:form id="AgendaForm">
                     <p:dataTable value="#{medicoControlador.citas}" var="cita">
-                        <p:column headerText="ID">
-                             <h:outputText value="#{cita.id}"/>
-                        </p:column>
-
+                      
                         <p:column headerText="Apellidos">
                            <h:outputText value="#{cita.paciente.apellidos}"/>
                         </p:column>
@@ -36,18 +33,10 @@ and open the template in the editor.
                             <h:outputText value="#{cita.estado}"/>
                         </p:column>
                         
-                         <p:column headerText="Fecha">
-                             <h:outputText value="#{cita.fecha}">
-                                <f:convertDateTime pattern="dd/MM/yyyy, hh:mm"/>
-                            </h:outputText>
-                        </p:column>
-                        
-                         <p:column headerText="Duración">
-                            <h:outputText value="#{cita.duracion}"/>
-                        </p:column>
-                        
-                          <p:column headerText="Hora">
-                            <h:outputText value="#{cita.hora}"/>
+                        <p:column headerText="Hora">
+                            <h:outputText value="#{cita.hora}">
+                                <f:convertDateTime pattern="HH:mm"/>
+                            </h:outputText>    
                         </p:column>
                         
                           <p:column headerText="Detalle">
