@@ -22,9 +22,9 @@ and open the template in the editor.
             <ui:define name="contenido">
                 <h:form id="listaMedicamentos">
                     <p:dataTable value="#{medicoControlador.medicamentos}"
-                                 var="medicamento" selection="#{medicoControlador.selectedMeds}" rowKey="#{medicamento.id}" style="margin-bottom:0">
+                                 var="medicamento" selection="#{medicoControlador.selectedMed}" rowKey="#{medicamento.id}" style="margin-bottom:0">
                         <f:facet name="header">Selección de medicamentos para el paciente</f:facet>
-                        <p:column selectionMode="multiple" style="width:20px;text-align:center"/>
+                        <p:column selectionMode="single" style="width:50px;text-align:center"/>
                         <p:column sortBy="#{medicamento.nombre}" filterBy="#{medicamento.nombre}">
                             <f:facet name="header"><p:outputLabel value="Nombre"/></f:facet>
                             <h:outputText value="#{medicamento.nombre}"/>
@@ -42,13 +42,34 @@ and open the template in the editor.
                             <h:outputText value="#{medicamento.familia}"/>
                         </p:column>
                         <p:column sortBy="#{medicamento.numeroDosis}" filterBy="#{medicamento.numeroDosis}">
-                            <f:facet name="header"><p:outputLabel value="Dosis"/></f:facet>
+                            <f:facet name="header"><p:outputLabel value="Dosis caja"/></f:facet>
                             <h:outputText value="#{medicamento.numeroDosis}"/>
                         </p:column>
-                        <f:facet name="footer">
-                            <p:commandButton icon="ui-icon-plusthick" value="Asign" oncomplete="#" />
-                        </f:facet>
                     </p:dataTable>
+                    <p:separator/>
+                    <div class="ui-g">
+                        <div class="ui-g-12 ui-md-6 ui-lg-3">
+                            <p:outputLabel value="Dosis asignada:" for="dosis" />
+                            <p:inputText id="dosis" value="#{medicoControlador.prescripcion.dosis}" type="Integer"/> 
+                        </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-3">
+                            <p:outputLabel value="Indicaciones:" for="indicaciones" />
+                            <p:inputTextarea rows="10" cols="50" id="indicaciones" value="#{medicoControlador.prescripcion.indicaciones}"/>
+                        </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-3">
+                            <p:outputLabel value="Fecha inicio:" for="fechaInicio" />
+                            <p:calendar id="fechaInicio" value="#{medicoControlador.prescripcion.fechaInicio}" pattern="dd-MM-yyyy" mask="true">
+                                <p:ajax event="dateSelect" listener="#{medicoControlador.onDateSelect}"/>
+                            </p:calendar>
+                        </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-3">
+                            <p:outputLabel value="Fecha fin:" for="fechaFin" />
+                            <p:calendar id="fechaFin" value="#{medicoControlador.prescripcion.fechaFin}" pattern="dd-MM-yyyy" mask="true">
+                                <p:ajax event="dateSelect" listener="#{medicoControlador.onDateSelect}"/>
+                            </p:calendar>
+                        </div>
+                    </div>
+                    <p:commandButton icon="ui-icon-plusthick" value="Añadir prescripcion" action="#{medicoControlador.addPrescripcion()}" />
                 </h:form>
             </ui:define>            
         </ui:composition>
