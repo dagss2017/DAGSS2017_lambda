@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
@@ -69,8 +70,16 @@ public class MedicoDAO extends GenericoDAO<Medico> {
         em.persist(prescripcion);
     }
     
-    public void borrarPrescripcion(Prescripcion prescripcion){
+    /*public void borrarPrescripcion(Prescripcion prescripcion){
+        if (!em.contains(prescripcion)) {
+           em.merge(prescripcion);
+        }
         em.remove(prescripcion);
+    }*/
+    
+    public void borrarPrescripcion(Prescripcion prescripcion){
+        Prescripcion per = em.merge(prescripcion);
+        em.remove(per);
     }
     
     public void actualizarPrescripcion(Prescripcion prescripcion){

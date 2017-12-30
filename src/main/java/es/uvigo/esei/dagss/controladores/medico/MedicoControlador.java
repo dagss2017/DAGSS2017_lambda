@@ -3,6 +3,8 @@
  */
 package es.uvigo.esei.dagss.controladores.medico;
 
+
+
 import es.uvigo.esei.dagss.controladores.autenticacion.AutenticacionControlador;
 import es.uvigo.esei.dagss.dominio.daos.MedicamentoDAO;
 import es.uvigo.esei.dagss.dominio.daos.MedicoDAO;
@@ -136,7 +138,13 @@ public class MedicoControlador implements Serializable {
         this.prescripcion=prescripcion;
     }
     
+    public void setSelectedMed(Medicamento selectedMed) {
+        this.selectedMed = selectedMed;
+    }
     
+    public Medicamento getSelectedMed() {
+        return this.selectedMed;
+    }
     
     private boolean parametrosAccesoInvalidos() {
         return (((dni == null) && (numeroColegiado == null)) || (password == null));
@@ -210,40 +218,33 @@ public class MedicoControlador implements Serializable {
         return "listaPrescripcion";
     }
     
-    public String addPrescripcion() throws ParseException{
-        System.out.println("======= SALIDA TESTING ======== ");
-        System.out.println("Dosis: " + prescripcion.getDosis());
-        System.out.println("Indicaciones: " + prescripcion.getIndicaciones());
-        System.out.println("F.Inicio: " + prescripcion.getFechaInicio());
-        System.out.println("F.Fin: " + prescripcion.getFechaFin());
-        prescripcion.setMedico(medicoActual);
-        prescripcion.setPaciente(citaDetalle.getPaciente());
-        prescripcion.setMedicamento(selectedMed);
-        medicoDAO.anhadirPrescripcion(prescripcion);
-        return doShowRecetas(citaDetalle.getPaciente());
-    
-    }
-    
     public String doNuevaPrescripcion(){
         prescripcion = new Prescripcion();
         setMedicamentos(medicamentoDAO.getAll());
         return "nuevaPrescripcion";
     }
     
-    public void setSelectedMed(Medicamento selectedMed) {
-        this.selectedMed = selectedMed;
+    public String addPrescripcion() throws ParseException{
+        prescripcion.setMedico(medicoActual);
+        prescripcion.setPaciente(citaDetalle.getPaciente());
+        prescripcion.setMedicamento(selectedMed);
+        medicoDAO.anhadirPrescripcion(prescripcion);
+        return doShowRecetas(citaDetalle.getPaciente());
     }
     
-    public Medicamento getSelectedMed() {
-        return this.selectedMed;
-    }
-    
-    public void doBorrarPrescripcion(Prescripcion prescripcion){
+    public String doBorrarPrescripcion(Prescripcion prescripcion) throws ParseException{
         medicoDAO.borrarPrescripcion(prescripcion);
+        return this.doShowRecetas(prescripcion.getPaciente());
     }
     
-    public void doEditarPrescripcion(Prescripcion prescripcion){
+    public String doEditarPrescripcion(Prescripcion prescripcion){
+        this.prescripcion = prescripcion;
+        return "editarPrescripcion";
+    }
+    
+    public String editarPrescripcion() throws ParseException{
         medicoDAO.actualizarPrescripcion(prescripcion);
+        return this.doShowRecetas(prescripcion.getPaciente());
     }
 
     public void onDateSelect(SelectEvent event) {
