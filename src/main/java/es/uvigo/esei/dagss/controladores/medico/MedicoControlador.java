@@ -238,11 +238,13 @@ public class MedicoControlador implements Serializable {
     }
     
     public String doEditarPrescripcion(Prescripcion prescripcion){
+        setMedicamentos(medicamentoDAO.getAll());
         this.prescripcion = prescripcion;
         return "editarPrescripcion";
     }
     
     public String editarPrescripcion() throws ParseException{
+        prescripcion.setMedicamento(selectedMed);
         medicoDAO.actualizarPrescripcion(prescripcion);
         return this.doShowRecetas(prescripcion.getPaciente());
     }

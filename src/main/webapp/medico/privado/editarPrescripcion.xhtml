@@ -22,15 +22,46 @@ and open the template in the editor.
             <ui:define name="contenido">
                 <h:form id="editarPrescripcion">
                     <b:column offset="3" span="7">
-                        <b:panel title="Credenciales de Médico" look="primary" collapsible="false">
-                            <b:inputText id="medicamento" label="Medicamento" value="#{medicoControlador.prescripcion.medicamento.nombre}" />
+                        <b:panel title="Editar Prescipcion" look="primary" collapsible="false">
+                            <p:dataTable value="#{medicoControlador.medicamentos}"
+                                 var="medicamento" selection="#{medicoControlador.selectedMed}" rowKey="#{medicamento.id}" style="margin-bottom:0">
+                                <f:facet name="header">Selección de medicamentos para el paciente</f:facet>
+                                <p:column selectionMode="single" style="width:50px;text-align:center"/>
+                                <p:column sortBy="#{medicamento.nombre}" filterBy="#{medicamento.nombre}">
+                                    <f:facet name="header"><p:outputLabel value="Nombre"/></f:facet>
+                                    <h:outputText value="#{medicamento.nombre}"/>
+                                </p:column>
+                                <p:column sortBy="#{medicamento.principioActivo}" filterBy="#{medicamento.principioActivo}">
+                                    <f:facet name="header"><p:outputLabel value="Principio activo"/></f:facet>
+                                    <h:outputText value="#{medicamento.principioActivo}"/>
+                                </p:column>
+                                <p:column sortBy="#{medicamento.fabricante}" filterBy="#{medicamento.fabricante}">
+                                    <f:facet name="header"><p:outputLabel value="Fabricante"/></f:facet>
+                                    <h:outputText value="#{medicamento.fabricante}"/>
+                                </p:column>
+                                <p:column sortBy="#{medicamento.familia}" filterBy="#{medicamento.familia}">
+                                    <f:facet name="header"><p:outputLabel value="Familia"/></f:facet>
+                                    <h:outputText value="#{medicamento.familia}"/>
+                                </p:column>
+                                <p:column sortBy="#{medicamento.numeroDosis}" filterBy="#{medicamento.numeroDosis}">
+                                    <f:facet name="header"><p:outputLabel value="Dosis caja"/></f:facet>
+                                    <h:outputText value="#{medicamento.numeroDosis}"/>
+                                </p:column>
+                            </p:dataTable>
+                            <p:separator/>
                             <b:inputText id="dosis" label="Dosis" value="#{medicoControlador.prescripcion.dosis}" />
                             <b:inputText id="indicaciones" label="Indicaciones" value="#{medicoControlador.prescripcion.indicaciones}" />
-                            <b:inputText id="fechaInicio" label="Fecha de Inicio" value="#{medicoControlador.prescripcion.fechaInicio}" />
-                            <b:inputText id="fechaFinal" label="Fecha Final" value="#{medicoControlador.prescripcion.fechaFin}" />
+                            <div class="ui-g-12 ui-md-6 ui-lg-3">
+                                <p:outputLabel value="Fecha inicio:" for="fechaInicio" />
+                                <p:calendar id="fechaInicio" label="Fecha de Inicio" value="#{medicoControlador.prescripcion.fechaInicio}" pattern="dd-MM-yyyy" />
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-3">
+                                <p:outputLabel value="Fecha fin:" for="fechaFin" />
+                                <p:calendar id="fechaFin" label="Fecha Final" value="#{medicoControlador.prescripcion.fechaFin}" pattern="dd-MM-yyyy" />
+                            </div>    
                         </b:panel>    
                     </b:column>
-                    <p:commandButton icon="ui-icon-plusthick" value="Editar prescripcion" action="#{medicoControlador.editarPrescripcion()}" />
+                    <p:commandButton value="Editar prescripcion" action="#{medicoControlador.editarPrescripcion()}" />
                     <p:commandButton value="Return" action="#{medicoControlador.doShowRecetas(medicoControlador.prescripcion.paciente)}" />
                 </h:form>
             </ui:define>            
