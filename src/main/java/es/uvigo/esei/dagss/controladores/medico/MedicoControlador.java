@@ -5,9 +5,8 @@ package es.uvigo.esei.dagss.controladores.medico;
 
 
 import es.uvigo.esei.dagss.controladores.autenticacion.AutenticacionControlador;
-import es.uvigo.esei.dagss.dominio.daos.MedicamentoDAO;
+import es.uvigo.esei.dagss.dominio.daos.CitaDAO;
 import es.uvigo.esei.dagss.dominio.daos.MedicoDAO;
-import es.uvigo.esei.dagss.dominio.daos.PrescripcionDAO;
 import es.uvigo.esei.dagss.dominio.entidades.Medico;
 import es.uvigo.esei.dagss.dominio.entidades.TipoUsuario;
 import javax.inject.Named;
@@ -19,9 +18,6 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import java.util.List;
 import es.uvigo.esei.dagss.dominio.entidades.Cita;
-import es.uvigo.esei.dagss.dominio.entidades.Medicamento;
-import es.uvigo.esei.dagss.dominio.entidades.Paciente;
-import es.uvigo.esei.dagss.dominio.entidades.Prescripcion;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -53,6 +49,9 @@ public class MedicoControlador implements Serializable {
 
     @EJB
     private MedicoDAO medicoDAO;
+    @EJB
+    private CitaDAO citaDAO;
+    
         /**
      * Creates a new instance of AdministradorControlador
      */
@@ -151,7 +150,7 @@ public class MedicoControlador implements Serializable {
        String fechaHoy = this.getFechaHoy();
        Date dFechaHoy = this.convertStringFecha(fechaHoy);
        
-       citas = medicoDAO.buscarCitasPorMedicoDia(medicoActual.getId(), dFechaHoy);
+       citas = citaDAO.buscarCitasPorMedicoDia(medicoActual.getId(), dFechaHoy);
        
        return "agenda";        
     }
@@ -173,6 +172,11 @@ public class MedicoControlador implements Serializable {
     public String doShowCita(Cita c) {
         citaDetalle = c;
         return "detallesCita";
+    }
+    
+    public String doActualizarEstadoCita() throws ParseException{
+        citaDAO.actualizarEstadoCita(citaDetalle);
+        return this.doDevolverAllCitasMedico();
     }
     
     public void onDateSelect(SelectEvent event) {

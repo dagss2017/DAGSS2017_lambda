@@ -40,9 +40,14 @@ and open the template in the editor.
                             <h:outputText id="duracion" value="#{medicoControlador.citaDetalle.duracion} mins" />
                             
                             <h:outputLabel value="Estado"/>
-                            <h:outputText id="estado" value="#{medicoControlador.citaDetalle.estado}" /> 
+                            <h:selectOneMenu value="#{medicoControlador.citaDetalle.estado}">
+                                <f:selectItem itemValue="PLANIFICADA" itemLabel="PLANIFICADA" />
+                                <f:selectItem itemValue="COMPLETADA" itemLabel="COMPLETADA" />
+                                <f:selectItem itemValue="AUSENTE" itemLabel="AUSENTE" />
+                            </h:selectOneMenu>
                         </p:panelGrid>
                     <p:commandButton value="Volver"  action="#{medicoControlador.doDevolverAllCitasMedico()}"/>
+                    <p:commandButton value="Actualizar Estado"  action="#{medicoControlador.doActualizarEstadoCita()}"/>
                     <p:commandButton value="Ver recetas"  action="#{prescripcionControlador.doShowRecetas(medicoControlador.citaDetalle.paciente, medicoControlador.medicoActual, medicoControlador.citaDetalle)}"/>
                 </h:form>
             </ui:define>            

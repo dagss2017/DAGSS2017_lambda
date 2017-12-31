@@ -47,14 +47,5 @@ public class MedicoDAO extends GenericoDAO<Medico> {
            em.remove -> eliminar */
         em.merge(medico);
     }
-    
-    public List<Cita> buscarCitasPorMedicoDia(Long medicoId, Date fecha) {
-       
-        TypedQuery<Cita> q = em.createQuery("SELECT c FROM Cita AS c WHERE c.fecha = :fecha AND c.medico.id = :medicoId", Cita.class);
-        q.setParameter("fecha", fecha); 
-        q.setParameter("medicoId", medicoId);
-        
-        return q.getResultList();
-    }
     // Completar aqui
 }
