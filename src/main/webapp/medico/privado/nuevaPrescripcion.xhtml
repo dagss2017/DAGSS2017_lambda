@@ -21,6 +21,7 @@ and open the template in the editor.
         <ui:composition template="/plantillas/plantillaComun.xhtml">
             <ui:define name="contenido">
                 <h:form id="listaMedicamentos">
+                    <h3>Añadir Prescripcion</h3>
                     <p:dataTable value="#{prescripcionControlador.medicamentos}"
                                  var="medicamento" selection="#{prescripcionControlador.selectedMed}" rowKey="#{medicamento.id}" style="margin-bottom:0">
                         <f:facet name="header">Selección de medicamentos para el paciente</f:facet>

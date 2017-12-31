@@ -16,10 +16,10 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
     <body>
-        <h3>Lista de prescripciones en vigor para el paciente</h3>
         <ui:composition template="/plantillas/plantillaComun.xhtml">
             <ui:define name="contenido">
                 <h:form id="listaPrescripcion">
+                    <h3>Formulario de Prescripciones</h3>
                     <h:commandButton value="Añadir" action="#{prescripcionControlador.doNuevaPrescripcion()}"/>
                     <h:commandButton value="Volver"  action="#{medicoControlador.doDevolverAllCitasMedico()}"/>
                     <p:dataTable value="#{prescripcionControlador.prescripciones}"
