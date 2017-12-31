@@ -5,7 +5,6 @@ package es.uvigo.esei.dagss.dominio.daos;
 
 import es.uvigo.esei.dagss.dominio.entidades.Cita;
 import es.uvigo.esei.dagss.dominio.entidades.Medico;
-import es.uvigo.esei.dagss.dominio.entidades.Prescripcion;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.LocalBean;
@@ -57,34 +56,5 @@ public class MedicoDAO extends GenericoDAO<Medico> {
         
         return q.getResultList();
     }
-    
-    public List<Prescripcion> buscarPrescripcionesPaciente(Long pacienteId, Date fecha) {
-       
-        TypedQuery<Prescripcion> q = em.createQuery("SELECT p FROM Prescripcion AS p WHERE p.paciente.id = :pacienteId AND p.fechaFin >= :fecha AND p.fechaInicio <= :fecha", Prescripcion.class); 
-        q.setParameter("pacienteId", pacienteId);
-        q.setParameter("fecha", fecha); 
-        return q.getResultList();
-    }
-    
-    public void anhadirPrescripcion(Prescripcion prescripcion){
-        em.persist(prescripcion);
-    }
-    
-    /*public void borrarPrescripcion(Prescripcion prescripcion){
-        if (!em.contains(prescripcion)) {
-           em.merge(prescripcion);
-        }
-        em.remove(prescripcion);
-    }*/
-    
-    public void borrarPrescripcion(Prescripcion prescripcion){
-        Prescripcion per = em.merge(prescripcion);
-        em.remove(per);
-    }
-    
-    public void actualizarPrescripcion(Prescripcion prescripcion){
-        em.merge(prescripcion);
-    }
-    
     // Completar aqui
 }

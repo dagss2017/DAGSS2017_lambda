@@ -8,6 +8,7 @@ package es.uvigo.esei.dagss.controladores.medico;
 import es.uvigo.esei.dagss.controladores.autenticacion.AutenticacionControlador;
 import es.uvigo.esei.dagss.dominio.daos.MedicamentoDAO;
 import es.uvigo.esei.dagss.dominio.daos.MedicoDAO;
+import es.uvigo.esei.dagss.dominio.daos.PrescripcionDAO;
 import es.uvigo.esei.dagss.dominio.entidades.Medico;
 import es.uvigo.esei.dagss.dominio.entidades.TipoUsuario;
 import javax.inject.Named;
@@ -59,6 +60,9 @@ public class MedicoControlador implements Serializable {
     private MedicoDAO medicoDAO;
     @EJB
     private MedicamentoDAO medicamentoDAO;
+    @EJB
+    private PrescripcionDAO prescripcionDAO;
+    
     private Medicamento selectedMed;
     /**
      * Creates a new instance of AdministradorControlador
@@ -214,7 +218,7 @@ public class MedicoControlador implements Serializable {
         return "detallesCita";
     }
     public String doShowRecetas(Paciente p) throws ParseException{
-        prescripciones = medicoDAO.buscarPrescripcionesPaciente(p.getId(),convertStringFecha(getFechaHoy()));
+        prescripciones = prescripcionDAO.buscarPrescripcionesPaciente(p.getId(),convertStringFecha(getFechaHoy()));
         return "listaPrescripcion";
     }
     
@@ -228,12 +232,12 @@ public class MedicoControlador implements Serializable {
         prescripcion.setMedico(medicoActual);
         prescripcion.setPaciente(citaDetalle.getPaciente());
         prescripcion.setMedicamento(selectedMed);
-        medicoDAO.anhadirPrescripcion(prescripcion);
+        prescripcionDAO.anhadirPrescripcion(prescripcion);
         return doShowRecetas(citaDetalle.getPaciente());
     }
     
     public String doBorrarPrescripcion(Prescripcion prescripcion) throws ParseException{
-        medicoDAO.borrarPrescripcion(prescripcion);
+        prescripcionDAO.borrarPrescripcion(prescripcion);
         return this.doShowRecetas(prescripcion.getPaciente());
     }
     
@@ -245,7 +249,7 @@ public class MedicoControlador implements Serializable {
     
     public String editarPrescripcion() throws ParseException{
         prescripcion.setMedicamento(selectedMed);
-        medicoDAO.actualizarPrescripcion(prescripcion);
+        prescripcionDAO.actualizarPrescripcion(prescripcion);
         return this.doShowRecetas(prescripcion.getPaciente());
     }
 
