@@ -21,8 +21,8 @@ and open the template in the editor.
         <ui:composition template="/plantillas/plantillaComun.xhtml">
             <ui:define name="contenido">
                 <h:form id="listaMedicamentos">
-                    <p:dataTable value="#{medicoControlador.medicamentos}"
-                                 var="medicamento" selection="#{medicoControlador.selectedMed}" rowKey="#{medicamento.id}" style="margin-bottom:0">
+                    <p:dataTable value="#{prescripcionControlador.medicamentos}"
+                                 var="medicamento" selection="#{prescripcionControlador.selectedMed}" rowKey="#{medicamento.id}" style="margin-bottom:0">
                         <f:facet name="header">Selección de medicamentos para el paciente</f:facet>
                         <p:column selectionMode="single" style="width:50px;text-align:center"/>
                         <p:column sortBy="#{medicamento.nombre}" filterBy="#{medicamento.nombre}">
@@ -50,27 +50,27 @@ and open the template in the editor.
                     <div class="ui-g">
                         <div class="ui-g-12 ui-md-6 ui-lg-3">
                             <p:outputLabel value="Dosis asignada:" for="dosis" />
-                            <p:inputText id="dosis" value="#{medicoControlador.prescripcion.dosis}" type="Integer"/> 
+                            <p:inputText id="dosis" value="#{prescripcionControlador.prescripcion.dosis}" type="Integer"/> 
                         </div>
                         <div class="ui-g-12 ui-md-6 ui-lg-3">
                             <p:outputLabel value="Indicaciones:" for="indicaciones" />
-                            <p:inputTextarea rows="10" cols="50" id="indicaciones" value="#{medicoControlador.prescripcion.indicaciones}"/>
+                            <p:inputTextarea rows="10" cols="50" id="indicaciones" value="#{prescripcionControlador.prescripcion.indicaciones}"/>
                         </div>
                         <div class="ui-g-12 ui-md-6 ui-lg-3">
                             <p:outputLabel value="Fecha inicio:" for="fechaInicio" />
-                            <p:calendar id="fechaInicio" value="#{medicoControlador.prescripcion.fechaInicio}" pattern="dd-MM-yyyy" mask="true">
-                                <p:ajax event="dateSelect" listener="#{medicoControlador.onDateSelect}"/>
+                            <p:calendar id="fechaInicio" value="#{prescripcionControlador.prescripcion.fechaInicio}" pattern="dd-MM-yyyy" mask="true">
+                                <p:ajax event="dateSelect" listener="#{prescripcionControlador.onDateSelect}"/>
                             </p:calendar>
                         </div>
                         <div class="ui-g-12 ui-md-6 ui-lg-3">
                             <p:outputLabel value="Fecha fin:" for="fechaFin" />
-                            <p:calendar id="fechaFin" value="#{medicoControlador.prescripcion.fechaFin}" pattern="dd-MM-yyyy" mask="true">
-                                <p:ajax event="dateSelect" listener="#{medicoControlador.onDateSelect}"/>
+                            <p:calendar id="fechaFin" value="#{prescripcionControlador.prescripcion.fechaFin}" pattern="dd-MM-yyyy" mask="true">
+                                <p:ajax event="dateSelect" listener="#{prescripcionControlador.onDateSelect}"/>
                             </p:calendar>
                         </div>
                     </div>
-                    <p:commandButton icon="ui-icon-plusthick" value="Añadir prescripcion" action="#{medicoControlador.addPrescripcion()}" />
-                    <p:commandButton value="Return" action="#{medicoControlador.doShowRecetas(medicoControlador.citaDetalle.paciente)}" />
+                    <p:commandButton icon="ui-icon-plusthick" value="Añadir prescripcion" action="#{prescripcionControlador.addPrescripcion()}" />
+                    <p:commandButton value="Return" action="#{prescripcionControlador.doShowRecetas(medicoControlador.citaDetalle.paciente)}" />
                 </h:form>
             </ui:define>            
         </ui:composition>

@@ -43,7 +43,7 @@ and open the template in the editor.
                             <h:outputText id="estado" value="#{medicoControlador.citaDetalle.estado}" /> 
                         </p:panelGrid>
                     <p:commandButton value="Volver"  action="#{medicoControlador.doDevolverAllCitasMedico()}"/>
-                    <p:commandButton value="Ver recetas"  action="#{medicoControlador.doShowRecetas(medicoControlador.citaDetalle.paciente)}"/>
+                    <p:commandButton value="Ver recetas"  action="#{prescripcionControlador.doShowRecetas(medicoControlador.citaDetalle.paciente, medicoControlador.medicoActual, medicoControlador.citaDetalle)}"/>
                 </h:form>
             </ui:define>            
         </ui:composition>

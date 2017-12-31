@@ -20,9 +20,9 @@ and open the template in the editor.
         <ui:composition template="/plantillas/plantillaComun.xhtml">
             <ui:define name="contenido">
                 <h:form id="listaPrescripcion">
-                    <h:commandButton value="Añadir" action="#{medicoControlador.doNuevaPrescripcion()}"/>
+                    <h:commandButton value="Añadir" action="#{prescripcionControlador.doNuevaPrescripcion()}"/>
                     <h:commandButton value="Volver"  action="#{medicoControlador.doDevolverAllCitasMedico()}"/>
-                    <p:dataTable value="#{medicoControlador.prescripciones}"
+                    <p:dataTable value="#{prescripcionControlador.prescripciones}"
                                  var="prescripcion">
                         <p:column>
                             <f:facet name="header"><h:outputLabel value="ID"/></f:facet>
@@ -54,11 +54,11 @@ and open the template in the editor.
                         </p:column>
                         
                         <p:column headerText="Borrar">
-                            <h:commandButton value="Borrar" action="#{medicoControlador.doBorrarPrescripcion(prescripcion)}"/>
+                            <h:commandButton value="Borrar" action="#{prescripcionControlador.doBorrarPrescripcion(prescripcion)}"/>
                         </p:column>
                         
                         <p:column headerText="Editar">
-                            <h:commandButton value="Editar" action="#{medicoControlador.doEditarPrescripcion(prescripcion)}"/>
+                            <h:commandButton value="Editar" action="#{prescripcionControlador.doEditarPrescripcion(prescripcion)}"/>
                         </p:column>
                         
                     </p:dataTable>

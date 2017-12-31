@@ -4,7 +4,6 @@
 package es.uvigo.esei.dagss.controladores.medico;
 
 
-
 import es.uvigo.esei.dagss.controladores.autenticacion.AutenticacionControlador;
 import es.uvigo.esei.dagss.dominio.daos.MedicamentoDAO;
 import es.uvigo.esei.dagss.dominio.daos.MedicoDAO;
@@ -46,10 +45,6 @@ public class MedicoControlador implements Serializable {
     private String password;
     
     private List<Cita> citas;
-    private List<Prescripcion> prescripciones;
-    private List<Medicamento> medicamentos;
-
-    private Prescripcion prescripcion;
     private Cita citaDetalle;
 
     @Inject
@@ -58,32 +53,10 @@ public class MedicoControlador implements Serializable {
 
     @EJB
     private MedicoDAO medicoDAO;
-    @EJB
-    private MedicamentoDAO medicamentoDAO;
-    @EJB
-    private PrescripcionDAO prescripcionDAO;
-    
-    private Medicamento selectedMed;
-    /**
+        /**
      * Creates a new instance of AdministradorControlador
      */
     public MedicoControlador() {
-    }
-
-    public List<Medicamento> getMedicamentos() {
-        return medicamentos;
-    }
-
-    public void setMedicamentos(List<Medicamento> medicamentos) {
-        this.medicamentos = medicamentos;
-    }
-    
-    public List<Prescripcion> getPrescripciones() {
-        return prescripciones;
-    }
-
-    public void setPrescripciones(List<Prescripcion> prescripciones) {
-        this.prescripciones = prescripciones;
     }
     
     public String getDni() {
@@ -132,22 +105,6 @@ public class MedicoControlador implements Serializable {
     
     public void setCitaDetalle(Cita citaDetalle){
         this.citaDetalle=citaDetalle;
-    }
-    
-    public Prescripcion getPrescripcion(){
-        return prescripcion;
-    }
-    
-    public void setPrescripcion(Prescripcion prescripcion){
-        this.prescripcion=prescripcion;
-    }
-    
-    public void setSelectedMed(Medicamento selectedMed) {
-        this.selectedMed = selectedMed;
-    }
-    
-    public Medicamento getSelectedMed() {
-        return this.selectedMed;
     }
     
     private boolean parametrosAccesoInvalidos() {
@@ -217,42 +174,7 @@ public class MedicoControlador implements Serializable {
         citaDetalle = c;
         return "detallesCita";
     }
-    public String doShowRecetas(Paciente p) throws ParseException{
-        prescripciones = prescripcionDAO.buscarPrescripcionesPaciente(p.getId(),convertStringFecha(getFechaHoy()));
-        return "listaPrescripcion";
-    }
     
-    public String doNuevaPrescripcion(){
-        prescripcion = new Prescripcion();
-        setMedicamentos(medicamentoDAO.getAll());
-        return "nuevaPrescripcion";
-    }
-    
-    public String addPrescripcion() throws ParseException{
-        prescripcion.setMedico(medicoActual);
-        prescripcion.setPaciente(citaDetalle.getPaciente());
-        prescripcion.setMedicamento(selectedMed);
-        prescripcionDAO.anhadirPrescripcion(prescripcion);
-        return doShowRecetas(citaDetalle.getPaciente());
-    }
-    
-    public String doBorrarPrescripcion(Prescripcion prescripcion) throws ParseException{
-        prescripcionDAO.borrarPrescripcion(prescripcion);
-        return this.doShowRecetas(prescripcion.getPaciente());
-    }
-    
-    public String doEditarPrescripcion(Prescripcion prescripcion){
-        setMedicamentos(medicamentoDAO.getAll());
-        this.prescripcion = prescripcion;
-        return "editarPrescripcion";
-    }
-    
-    public String editarPrescripcion() throws ParseException{
-        prescripcion.setMedicamento(selectedMed);
-        prescripcionDAO.actualizarPrescripcion(prescripcion);
-        return this.doShowRecetas(prescripcion.getPaciente());
-    }
-
     public void onDateSelect(SelectEvent event) {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
