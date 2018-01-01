@@ -25,8 +25,8 @@ and open the template in the editor.
                     <p:dataTable value="#{prescripcionControlador.prescripciones}"
                                  var="prescripcion">
                         <p:column>
-                            <f:facet name="header"><h:outputLabel value="ID"/></f:facet>
-                            <h:outputText value="#{prescripcion.id}"/>
+                            <f:facet name="header"><h:outputLabel value="Medicamento"/></f:facet>
+                            <h:outputText value="#{prescripcion.medicamento.nombre}"/>
                         </p:column>
                         <p:column>
                             <f:facet name="header"><h:outputLabel value="Dosis"/></f:facet>
@@ -48,10 +48,6 @@ and open the template in the editor.
                             <f:facet name="header"><h:outputLabel value="Indicaciones"/></f:facet>
                             <h:outputText value="#{prescripcion.indicaciones}"/>
                         </p:column>
-                        <p:column>
-                            <f:facet name="header"><h:outputLabel value="Medicamento"/></f:facet>
-                            <h:outputText value="#{prescripcion.medicamento.nombre}"/>
-                        </p:column>
                         
                         <p:column headerText="Borrar">
                             <h:commandButton value="Borrar" action="#{prescripcionControlador.doBorrarPrescripcion(prescripcion)}"/>
@@ -59,6 +55,10 @@ and open the template in the editor.
                         
                         <p:column headerText="Editar">
                             <h:commandButton value="Editar" action="#{prescripcionControlador.doEditarPrescripcion(prescripcion)}"/>
+                        </p:column>
+                        
+                        <p:column headerText="Ver Recetas">
+                            <h:commandButton value="Ver Recetas" action="#{prescripcionControlador.doShowListaRecetas(prescripcion)}"/>
                         </p:column>
                         
                     </p:dataTable>

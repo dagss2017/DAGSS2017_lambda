@@ -44,6 +44,12 @@ public class PrescripcionDAO extends GenericoDAO<Prescripcion> {
     
     public void anhadirPrescripcion(Prescripcion prescripcion){
         em.persist(prescripcion);
+        
+        List<Receta> recetas = prescripcion.getRecetas();
+        
+        for(int i = 0;i<recetas.size();i++){
+            em.persist(recetas.get(i));
+        }
     }
     
     public void borrarPrescripcion(Prescripcion prescripcion){

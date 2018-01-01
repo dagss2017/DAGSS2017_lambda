@@ -21,11 +21,13 @@ import es.uvigo.esei.dagss.dominio.entidades.Cita;
 import es.uvigo.esei.dagss.dominio.entidades.Medicamento;
 import es.uvigo.esei.dagss.dominio.entidades.Paciente;
 import es.uvigo.esei.dagss.dominio.entidades.Prescripcion;
+import es.uvigo.esei.dagss.dominio.entidades.Receta;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Calendar;
+import java.util.LinkedList;
 import org.primefaces.event.SelectEvent;
 
 /**
@@ -122,6 +124,7 @@ public class PrescripcionControlador implements Serializable{
         prescripcion.setMedico(medicoActual);
         prescripcion.setPaciente(citaDetalle.getPaciente());
         prescripcion.setMedicamento(selectedMed);
+        prescripcion.setRecetas(crearListaRecetas());
         prescripcionDAO.anhadirPrescripcion(prescripcion);
         return doShowRecetas(citaDetalle.getPaciente());
     }
@@ -141,6 +144,55 @@ public class PrescripcionControlador implements Serializable{
         prescripcion.setMedicamento(selectedMed);
         prescripcionDAO.actualizarPrescripcion(prescripcion);
         return this.doShowRecetas(prescripcion.getPaciente());
+    }
+    
+    public List<Receta> crearListaRecetas(){
+        List<Receta> toRet = new LinkedList<>();
+        
+        int dosisTot = prescripcion.getDosis();
+        int numDosis = prescripcion.getMedicamento().getNumeroDosis();
+        int cal = dosisTot/numDosis;
+        int dosisReceta = dosisTot/cal;
+        int aux = dosisReceta;
+        
+        Calendar date = Calendar.getInstance();
+        date.setTime(prescripcion.getFechaInicio());
+        
+        for(int i=0;i<cal;i++){
+            Receta receta = new Receta();
+            
+            receta.setPrescripcion(prescripcion);
+            
+            if(dosisTot>aux){
+                receta.setCantidad(aux);
+                dosisTot = dosisTot - aux;
+            }else{
+                receta.setCantidad(dosisTot);
+            }    
+            
+            if(date.getTime().before(prescripcion.getFechaFin())){
+                receta.setInicioValidez(date.getTime());
+                date.add(Calendar.DATE,6);
+            }else{
+                receta.setInicioValidez(prescripcion.getFechaFin());
+            }
+            
+            if(date.getTime().before(prescripcion.getFechaFin())){
+                receta.setFinValidez(date.getTime());
+                date.add(Calendar.DATE,1);
+            }else{
+                receta.setFinValidez(prescripcion.getFechaFin());
+            }
+            
+            toRet.add(receta);
+        }
+        
+        return toRet;
+    }
+    
+    public String doShowListaRecetas(Prescripcion p) throws ParseException{
+        prescripcion = p;
+        return "listaReceta";
     }
 
     public void onDateSelect(SelectEvent event) {
