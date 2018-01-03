@@ -152,6 +152,11 @@ public class PrescripcionControlador implements Serializable{
         int dosisTot = prescripcion.getDosis();
         int numDosis = prescripcion.getMedicamento().getNumeroDosis();
         int cal = dosisTot/numDosis;
+        
+        if(cal<1){
+            cal = 1;
+        }
+        
         int dosisReceta = dosisTot/cal;
         int aux = dosisReceta;
         
