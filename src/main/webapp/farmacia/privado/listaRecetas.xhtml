@@ -20,31 +20,48 @@ and open the template in the editor.
             <h3> Lista de Recetas </h3>
                 <h:form id="RecetasForm">
                     <p:dataTable value="#{farmaciaControlador.prescripciones}" var="prescripcion">
-                        <p:column headerText="Inidicaciones">
+                       <p:column>
+                            <f:facet name="header"><h:outputLabel value="FECH.INICIO"/></f:facet>
+                                <h:outputText value="#{prescripcion.fechaInicio}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                </h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header"><h:outputLabel value="FECH.FIN"/></f:facet>
+                                <h:outputText value="#{prescripcion.fechaFin}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                </h:outputText>
+                        </p:column>
+                        <p:column headerText="SERVIR">
+                            <h:outputText value="SI/NO"/>
+                        </p:column>
+                        <p:column headerText="ESTADO">
+                            <h:outputText value="GENERA/SERVIDA/ANULADA"/>
+                        </p:column>
+                        <p:column headerText="MED">
+                                <h:outputText value="#{prescripcion.medicamento.nombre}"/>
+                        </p:column>
+                        <p:column headerText="P.ACTIVO">
+                            <h:outputText value="#{prescripcion.medicamento.principioActivo}"/>
+                        </p:column>
+                        <p:column headerText="FAB">
+                            <h:outputText value="#{prescripcion.medicamento.fabricante}"/>
+                        </p:column>
+                        <p:column headerText="DOSIS">
+                            <h:outputText value="#{prescripcion.dosis}"/>
+                        </p:column>
+                        <p:column headerText="INSTRUC.">
                             <h:outputText value="#{prescripcion.indicaciones}"/>
                         </p:column>
-                         <p:column headerText="Dosis">
-                             <h:outputText value="#{prescripcion.dosis}"/>
-                        </p:column>
-                        <p:column headerText="Fecha Inicio">
-                            <h:outputText value="#{prescripcion.fechaInicio}"/>
-                        </p:column>
-                        <p:column headerText="Fecha Fin">
-                            <h:outputText value="#{prescripcion.fechaFin}"/>
-                        </p:column>
-                        <p:column headerText="Médico N. Colegiado">
+                        <p:column headerText="MÉDICO">
                             <h:outputText value="#{prescripcion.medico.numeroColegiado}"/>
                         </p:column>
-                         <p:column headerText="Médico Nombre">
+                         <p:column headerText="NOMBRE">
                             <h:outputText value="#{prescripcion.medico.nombre}"/>
                         </p:column>
-                        <p:column headerText="Receta">
-                            <p:dataTable value="#{farmaciaControlador.prescripciones}" var="receta">
-                                
-                            </p:dataTable>
+                        <p:column headerText="APELLIDOS">
+                            <h:outputText value="#{prescripcion.medico.apellidos}"/>
                         </p:column>
-
-                        
                     </p:dataTable>
                     <h:commandButton value="Volver" action="index"/>
                 </h:form>
