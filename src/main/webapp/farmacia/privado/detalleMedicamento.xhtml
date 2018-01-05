@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    
+    <head>
+        <title>Formulario de Atención al Paciente</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+    <body>
+        <h3>Formulario de Atención al Paciente</h3>
+        <ui:composition template="/plantillas/plantillaComun.xhtml">
+            <ui:define name="contenido">
+                <h:form id="detallesCita">
+                    <h3>Detalle Medicamento Recetado</h3>
+                        <p:panelGrid columns="2">
+                            <h:outputLabel value="ID"/>
+                            <h:outputText id="id" value="#{gestionMedicamentosControlador.medicamentoActual.id}" />
+                            
+                            <h:outputLabel value="NOMBRE"/>
+                            <h:outputText id="apellidos" value="#{gestionMedicamentosControlador.medicamentoActual.nombre}" />
+                            
+                            <h:outputLabel value="FABRICANTE"/>
+                            <h:outputText id="fabricante" value="#{gestionMedicamentosControlador.medicamentoActual.fabricante}" />
+                            
+                            <h:outputLabel value="FAMILIA"/>
+                            <h:outputText id="familia" value="#{gestionMedicamentosControlador.medicamentoActual.familia}" />
+                            
+                            <h:outputLabel value="PRINCIPIO ACTIVO"/>
+                            <h:outputText id="activo" value="#{gestionMedicamentosControlador.medicamentoActual.principioActivo}" />
+                            
+                             <h:outputLabel value="Núm.DOSIS"/>
+                             <h:outputText id="dosis" value="#{gestionMedicamentosControlador.medicamentoActual.numeroDosis}" />
+                        </p:panelGrid>
+                    <p:commandButton value="Volver"  action="#{farmaciaControlador.recetas()}"/>
+                </h:form>
+            </ui:define>            
+        </ui:composition>
+    </body>
+</html>

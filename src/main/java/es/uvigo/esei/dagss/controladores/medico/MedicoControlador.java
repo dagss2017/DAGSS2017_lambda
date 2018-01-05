@@ -184,4 +184,9 @@ public class MedicoControlador implements Serializable {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected", format.format(event.getObject())));
     }
+    
+    public String detalleMedico(Medico medico){
+        this.medicoActual=medico;
+        return "./detalleMedico.xhtml";
+    }
 }

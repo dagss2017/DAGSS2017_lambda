@@ -78,7 +78,11 @@ public class GestionMedicamentosControlador implements Serializable {
         // Actualiza lista  a mostrar
         medicamentos = medicamentoDAO.buscarTodos();
     }
-
+    
+     public String detalle(Medicamento medicamento) {
+        medicamentoActual = medicamento;
+        return "./detalleMedicamento.xhtml";
+    }
 
     public String doVolver() {
         return "../index?faces-redirect=true";
