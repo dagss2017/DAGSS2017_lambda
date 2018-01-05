@@ -25,7 +25,7 @@ and open the template in the editor.
                     <b:column offset="3" span="7">
                         <b:panel title="Editar Prescipcion" look="primary" collapsible="false">
                             <p:dataTable value="#{prescripcionControlador.medicamentos}"
-                                 var="medicamento" selection="#{prescripcionControlador.selectedMed}" rowKey="#{medicamento.id}" style="margin-bottom:0">
+                                         var="medicamento" selection="#{prescripcionControlador.prescripcion.medicamento}" rowKey="#{medicamento.id}" style="margin-bottom:0">
                                 <f:facet name="header">Selección de medicamentos para el paciente</f:facet>
                                 <p:column selectionMode="single" style="width:50px;text-align:center"/>
                                 <p:column sortBy="#{medicamento.nombre}" filterBy="#{medicamento.nombre}">
