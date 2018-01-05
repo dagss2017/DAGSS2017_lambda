@@ -137,6 +137,7 @@ public class PrescripcionControlador implements Serializable{
     public String doEditarPrescripcion(Prescripcion prescripcion){
         setMedicamentos(medicamentoDAO.getAll());
         this.prescripcion = prescripcion;
+        selectedMed = prescripcion.getMedicamento();
         return "editarPrescripcion";
     }
     
