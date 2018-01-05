@@ -115,6 +115,7 @@ public class PrescripcionControlador implements Serializable{
     }
     
     public String doNuevaPrescripcion(){
+        selectedMed = new Medicamento();
         prescripcion = new Prescripcion();
         setMedicamentos(medicamentoDAO.getAll());
         return "nuevaPrescripcion";
