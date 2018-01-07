@@ -13,42 +13,45 @@ and open the template in the editor.
       xmlns:b="http://bootsfaces.net/ui">
       
     <h:head>
-        <title>Gestión de Recetas</title>
+        <title>Gestión de Prescripciones</title>
     </h:head>
     <h:body>
         <ui:composition template="/plantillas/plantillaComun.xhtml">
             <ui:define name="contenido">
-            <h3> Lista de Recetas </h3>
+            <h3> Lista de Prescripciones </h3>
                 <h:form id="RecetasForm">
-                    <p:dataTable value="#{farmaciaControlador.prescripciones}" var="prescripcion">
+                    <p:dataTable value="#{farmaciaControlador.prescripciones}" var="receta">
                        <p:column>
                             <f:facet name="header"><h:outputLabel value="FECH.INICIO"/></f:facet>
-                                <h:outputText value="#{prescripcion.fechaInicio}">
+                                <h:outputText value="#{receta.fechaInicio}">
                                     <f:convertDateTime pattern="dd/MM/yyyy"/>
                                 </h:outputText>
                         </p:column>
                         <p:column>
                             <f:facet name="header"><h:outputLabel value="FECH.FIN"/></f:facet>
-                                <h:outputText value="#{prescripcion.fechaFin}">
+                                <h:outputText value="#{receta.fechaFin}">
                                     <f:convertDateTime pattern="dd/MM/yyyy"/>
                                 </h:outputText>
                         </p:column>
-                        <p:column headerText="SERVIR">
-                            <h:outputText value="SI/NO"/>
-                        </p:column>
-                        <p:column headerText="ESTADO">
-                            <h:outputText value="GENERA/SERVIDA/ANULADA"/>
+                        <p:column headerText="SITUACIÓN">
+                            <h:outputText value="DISPONIBLE"/>
                         </p:column>
                         <p:column headerText="MEDICAMENTO">
-                            <p:link href="#{gestionMedicamentosControlador.detalle(prescripcion.medicamento)}" 
-                                    value="#{prescripcion.medicamento.nombre}"/>
+                            <p:link href="#{gestionMedicamentosControlador.detalle(receta.medicamento)}" 
+                                    value="#{receta.medicamento.nombre}"/>
+                        </p:column>
+                         <p:column headerText="DOSIS">
+                             <h:outputText value="#{receta.dosis}"/>
                         </p:column>
                         <p:column headerText="INSTRUC.">
-                            <h:outputText value="#{prescripcion.indicaciones}"/>
+                            <h:outputText value="#{receta.indicaciones}"/>
                         </p:column>
                         <p:column headerText="MÉDICO">
-                            <p:link href="#{medicoControlador.detalleMedico(prescripcion.medico)}" 
-                                    value="#{prescripcion.medico.numeroColegiado}"/>
+                            <p:link href="#{medicoControlador.detalleMedico(receta.medico)}" 
+                                    value="#{receta.medico.numeroColegiado}"/>
+                        </p:column>
+                         <p:column headerText="Estado Receta">
+                            <h:commandButton value="Detalle" action="#{farmaciaControlador.doShowReceta(receta.recetas)}"/>
                         </p:column>
                     </p:dataTable>
                     <h:commandButton value="Volver" action="index"/>

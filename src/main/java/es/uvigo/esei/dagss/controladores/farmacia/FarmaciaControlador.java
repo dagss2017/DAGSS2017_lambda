@@ -7,11 +7,17 @@ import es.uvigo.esei.dagss.controladores.autenticacion.AutenticacionControlador;
 import es.uvigo.esei.dagss.dominio.daos.FarmaciaDAO;
 import es.uvigo.esei.dagss.dominio.daos.PacienteDAO;
 import es.uvigo.esei.dagss.dominio.daos.PrescripcionDAO;
+import es.uvigo.esei.dagss.dominio.daos.RecetaDAO;
 import es.uvigo.esei.dagss.dominio.entidades.*;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -27,11 +33,11 @@ public class FarmaciaControlador implements Serializable {
 
     private Farmacia farmaciaActual;
     private List<Prescripcion> prescripciones;
+    private List<Receta> recetas;
     private String nif;
     private String password;
     private String tarjetaSanitaria = "";
     private Paciente paciente = null;
-
     @Inject
     private AutenticacionControlador autenticacionControlador;
 
@@ -43,6 +49,9 @@ public class FarmaciaControlador implements Serializable {
     
     @EJB
     private PacienteDAO pacienteDAO;
+    
+    @EJB
+    private RecetaDAO recetaDAO;
 
     /**
      * Creates a new instance of AdministradorControlador
@@ -68,6 +77,10 @@ public class FarmaciaControlador implements Serializable {
 
     public String getPassword() {
         return password;
+    }
+    
+    public List<Receta> getReceta(){
+        return this.recetas;
     }
 
     public void setPassword(String password) {
@@ -117,10 +130,29 @@ public class FarmaciaControlador implements Serializable {
 
     public String buscarPaciente() {
         this.paciente = pacienteDAO.buscarPorTarjetaSanitaria(this.tarjetaSanitaria);
-        
-        this.prescripciones=prescripcionDAO.buscarPorPaciente(paciente.getDni());
-        
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/M/dd");
+        String fecha = sdf.format(new Date());
+        try {
+            Date a =sdf.parse(fecha);
+            this.prescripciones=prescripcionDAO.buscarPrescripcionesPacienteFecha(paciente.getDni(),a);
+            /*for(Prescripcion p: this.prescripciones){
+                for(Receta r:p.getRecetas()){
+                    p.setEstado(prescripcionDAO.obtenerEstadoReceta(r.getId()));
+                }
+            }*/
+        } catch (ParseException ex) {
+            Logger.getLogger(FarmaciaControlador.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return "buscarPaciente";
+    }
+    
+    public String doShowReceta(List<Receta> recetas){
+        this.recetas=recetas;
+        return "detalleReceta";
+    }
+    
+    public void doActualizarReceta(Receta receta){
+        recetaDAO.actualizar(receta);
     }
     
     public String recetas(){

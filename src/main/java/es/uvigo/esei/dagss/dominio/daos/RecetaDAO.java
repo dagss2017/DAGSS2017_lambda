@@ -12,5 +12,7 @@ import javax.ejb.Stateless;
 @LocalBean
 public class RecetaDAO extends GenericoDAO<Receta>{
  
-    // Completar aqui
+    public void actualizarPrescripcion(Receta receta){
+        em.merge(receta);
+    }
 }
