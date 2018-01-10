@@ -19,4 +19,9 @@ public class RecetaDAO extends GenericoDAO<Receta>{
             em.persist(recetas.get(i));
         }
      }    
+
+    public void actualizarPrescripcion(Receta receta){
+        em.merge(receta);
+    }
+
 }

@@ -22,7 +22,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 public class Prescripcion implements Serializable {
-
+    //private String estado;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
@@ -84,7 +84,15 @@ public class Prescripcion implements Serializable {
     public Medicamento getMedicamento() {
         return medicamento;
     }
-
+    
+    /*public String getEstado(){
+        return estado;
+    }
+    
+    public void setEstado(String estado){
+        this.estado=estado;
+    }*/
+    
     public void setMedicamento(Medicamento medicamento) {
         this.medicamento = medicamento;
     }

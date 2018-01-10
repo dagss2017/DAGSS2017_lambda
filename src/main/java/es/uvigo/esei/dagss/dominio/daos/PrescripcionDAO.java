@@ -54,4 +54,12 @@ public class PrescripcionDAO extends GenericoDAO<Prescripcion> {
         em.merge(prescripcion);
     }
     
+    
+    public List<Prescripcion> buscarPrescripcionesPacienteFecha(String pacienteDni, Date fecha) {
+       
+        TypedQuery<Prescripcion> q = em.createQuery("SELECT p FROM Prescripcion AS p WHERE p.paciente.dni = :pacienteId AND p.fechaFin >= :fecha AND p.fechaInicio <= :fecha", Prescripcion.class); 
+        q.setParameter("pacienteId", pacienteDni);
+        q.setParameter("fecha", fecha); 
+        return q.getResultList();
+    }
 }
