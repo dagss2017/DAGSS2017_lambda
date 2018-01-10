@@ -15,21 +15,18 @@ import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
 import java.util.List;
 import es.uvigo.esei.dagss.dominio.entidades.Cita;
 import es.uvigo.esei.dagss.dominio.entidades.Medicamento;
 import es.uvigo.esei.dagss.dominio.entidades.Paciente;
 import es.uvigo.esei.dagss.dominio.entidades.Prescripcion;
-import es.uvigo.esei.dagss.dominio.entidades.Receta;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Calendar;
-import java.util.LinkedList;
+import javax.inject.Inject;
 import org.primefaces.event.SelectEvent;
-
 /**
  *
  * @author burni
@@ -45,6 +42,8 @@ public class PrescripcionControlador implements Serializable{
     private Prescripcion prescripcion;
     private Cita citaDetalle;
     private Medico medicoActual;
+    @Inject
+    private PrescripcionService ps;
     
     @EJB
     private MedicamentoDAO medicamentoDAO;
@@ -89,6 +88,14 @@ public class PrescripcionControlador implements Serializable{
         return this.selectedMed;
     }
     
+    public void setPrescripcionService(PrescripcionService ps) {
+        this.ps = ps;
+    }
+    
+    public PrescripcionService getPrescripcionService() {
+        return this.ps;
+    }
+    
     public String getFechaHoy(){
        Date date = Calendar.getInstance().getTime();
        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -122,11 +129,13 @@ public class PrescripcionControlador implements Serializable{
     }
     
     public String addPrescripcion() throws ParseException{
+        
         prescripcion.setMedico(medicoActual);
         prescripcion.setPaciente(citaDetalle.getPaciente());
         prescripcion.setMedicamento(selectedMed);
-        prescripcion.setRecetas(crearListaRecetas());
-        prescripcionDAO.anhadirPrescripcion(prescripcion);
+
+        ps.registrarPrescripcion(prescripcion);
+        
         return doShowRecetas(citaDetalle.getPaciente());
     }
     
@@ -144,55 +153,6 @@ public class PrescripcionControlador implements Serializable{
     public String editarPrescripcion() throws ParseException{
         prescripcionDAO.actualizarPrescripcion(prescripcion);
         return this.doShowRecetas(prescripcion.getPaciente());
-    }
-    
-    public List<Receta> crearListaRecetas(){
-        List<Receta> toRet = new LinkedList<>();
-        
-        int dosisTot = prescripcion.getDosis();
-        int numDosis = prescripcion.getMedicamento().getNumeroDosis();
-        int cal = dosisTot/numDosis;
-        
-        if(cal<1){
-            cal = 1;
-        }
-        
-        int dosisReceta = dosisTot/cal;
-        int aux = dosisReceta;
-        
-        Calendar date = Calendar.getInstance();
-        date.setTime(prescripcion.getFechaInicio());
-        
-        for(int i=0;i<cal;i++){
-            Receta receta = new Receta();
-            
-            receta.setPrescripcion(prescripcion);
-            
-            if(dosisTot>aux){
-                receta.setCantidad(aux);
-                dosisTot = dosisTot - aux;
-            }else{
-                receta.setCantidad(dosisTot);
-            }    
-            
-            if(date.getTime().before(prescripcion.getFechaFin())){
-                receta.setInicioValidez(date.getTime());
-                date.add(Calendar.DATE,6);
-            }else{
-                receta.setInicioValidez(prescripcion.getFechaFin());
-            }
-            
-            if(date.getTime().before(prescripcion.getFechaFin())){
-                receta.setFinValidez(date.getTime());
-                date.add(Calendar.DATE,1);
-            }else{
-                receta.setFinValidez(prescripcion.getFechaFin());
-            }
-            
-            toRet.add(receta);
-        }
-        
-        return toRet;
     }
     
     public String doShowListaRecetas(Prescripcion p) throws ParseException{

@@ -4,7 +4,6 @@
 package es.uvigo.esei.dagss.dominio.daos;
 
 import es.uvigo.esei.dagss.dominio.entidades.*;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.LocalBean;
@@ -42,14 +41,8 @@ public class PrescripcionDAO extends GenericoDAO<Prescripcion> {
         return q.getResultList();
     }
     
-    public void anhadirPrescripcion(Prescripcion prescripcion){
+    public void anhadirPrescripcion(Prescripcion prescripcion){  
         em.persist(prescripcion);
-        
-        List<Receta> recetas = prescripcion.getRecetas();
-        
-        for(int i = 0;i<recetas.size();i++){
-            em.persist(recetas.get(i));
-        }
     }
     
     public void borrarPrescripcion(Prescripcion prescripcion){
